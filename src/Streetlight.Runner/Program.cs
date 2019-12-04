@@ -7,7 +7,7 @@ namespace Streetlight.Runner
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello");
+            Console.Write(">> Hello ");
             new Class1().Say("World!");
         }
     }
