@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Streetlight.Base", "Streetl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Streetlight.Base.Tests", "Streetlight.Base.Tests\Streetlight.Base.Tests.csproj", "{8885BDA8-C37B-4134-9D35-C1D55CF1D7F4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Streetlight.Console", "Streetlight.Console\Streetlight.Console.csproj", "{F4082C47-DE20-4BC1-BCD5-C43FC6ADB987}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,5 +46,17 @@ Global
 		{8885BDA8-C37B-4134-9D35-C1D55CF1D7F4}.Release|x64.Build.0 = Release|Any CPU
 		{8885BDA8-C37B-4134-9D35-C1D55CF1D7F4}.Release|x86.ActiveCfg = Release|Any CPU
 		{8885BDA8-C37B-4134-9D35-C1D55CF1D7F4}.Release|x86.Build.0 = Release|Any CPU
+		{F4082C47-DE20-4BC1-BCD5-C43FC6ADB987}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4082C47-DE20-4BC1-BCD5-C43FC6ADB987}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4082C47-DE20-4BC1-BCD5-C43FC6ADB987}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F4082C47-DE20-4BC1-BCD5-C43FC6ADB987}.Debug|x64.Build.0 = Debug|Any CPU
+		{F4082C47-DE20-4BC1-BCD5-C43FC6ADB987}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F4082C47-DE20-4BC1-BCD5-C43FC6ADB987}.Debug|x86.Build.0 = Debug|Any CPU
+		{F4082C47-DE20-4BC1-BCD5-C43FC6ADB987}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4082C47-DE20-4BC1-BCD5-C43FC6ADB987}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4082C47-DE20-4BC1-BCD5-C43FC6ADB987}.Release|x64.ActiveCfg = Release|Any CPU
+		{F4082C47-DE20-4BC1-BCD5-C43FC6ADB987}.Release|x64.Build.0 = Release|Any CPU
+		{F4082C47-DE20-4BC1-BCD5-C43FC6ADB987}.Release|x86.ActiveCfg = Release|Any CPU
+		{F4082C47-DE20-4BC1-BCD5-C43FC6ADB987}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
