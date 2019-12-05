@@ -7,8 +7,9 @@ namespace Streetlight.Runner
     {
         static void Main(string[] args)
         {
-            Console.Write(">> Hello ");
-            new Class1().Say("World!");
+            Action onDispose = () => Console.WriteLine("Cleanup completed.");
+            new ConsoleHandler(onDispose).Run(new Class1().PrintTrackName);
+            Console.WriteLine("Exiting gracefully.");
         }
     }
 }
