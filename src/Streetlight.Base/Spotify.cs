@@ -9,8 +9,9 @@ namespace Streetlight.Base
 {
     internal class Spotify
     {
-        private const string _clientId = "ae8e2b78a5c145d6af9c9e26a1f91c0c";
-        private static SpotifyWebAPI _spotify;
+        //TO BE REPLACED LATER WITH SECRET MGMT, FOR NOW, HARDCODED:
+        private const string _clientId = "ae8e2b78a5c145d6af9c9e26a1f91c0c"; 
+        private SpotifyWebAPI _spotify;
         private ManualResetEvent _authenticated;
 
         public Spotify()
