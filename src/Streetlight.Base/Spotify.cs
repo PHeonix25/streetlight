@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Threading;
 using SpotifyAPI.Web;
 using SpotifyAPI.Web.Auth;
 using SpotifyAPI.Web.Models;
@@ -10,30 +11,32 @@ namespace Streetlight.Base
     {
         private const string _clientId = "ae8e2b78a5c145d6af9c9e26a1f91c0c";
         private static SpotifyWebAPI _spotify;
-        private bool IsAuthenticated = false;
+        private ManualResetEvent _authenticated;
 
         public Spotify()
         {
+            _authenticated = new ManualResetEvent(false);
+
             var auth = new ImplicitGrantAuth(
                 _clientId,
                 "http://localhost:5000",
                 "http://localhost:5000"
               );
+            
             auth.AuthReceived += (sender, payload) =>
             {
-                Console.WriteLine("## Auth token received");
                 auth.Stop(); // `sender` is also the auth instance
                 _spotify = new SpotifyWebAPI()
                 {
                     TokenType = payload.TokenType,
                     AccessToken = payload.AccessToken
                 };
-                IsAuthenticated = true;
+                _authenticated.Set();
             };
-            Console.WriteLine("## Requesting auth token");
+
             auth.Start(); // Starts an internal HTTP Server
             auth.OpenBrowser();
-            while (!IsAuthenticated) { }; // Wait for the auth-token to come back.
+            _authenticated.WaitOne(); // Wait for the auth-token to come back.
         }
 
         public void GetTrack()
