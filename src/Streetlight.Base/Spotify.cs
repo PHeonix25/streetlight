@@ -4,17 +4,23 @@ using System.Threading;
 using SpotifyAPI.Web;
 using SpotifyAPI.Web.Auth;
 using SpotifyAPI.Web.Models;
+using Streetlight.Base.Helpers;
 
 namespace Streetlight.Base
 {
-    internal class Spotify
+    internal class Spotify : IDisposable
     {
         //TO BE REPLACED LATER WITH SECRET MGMT, FOR NOW, HARDCODED:
-        private const string _clientId = "ae8e2b78a5c145d6af9c9e26a1f91c0c"; 
+        private const string _clientId = "ae8e2b78a5c145d6af9c9e26a1f91c0c";
         private SpotifyWebAPI _spotify;
         private ManualResetEvent _authenticated;
 
         public Spotify()
+        {
+            Authenticate();
+        }
+
+        private void Authenticate()
         {
             _authenticated = new ManualResetEvent(false);
 
@@ -23,7 +29,7 @@ namespace Streetlight.Base
                 "http://localhost:5000",
                 "http://localhost:5000"
               );
-            
+
             auth.AuthReceived += (sender, payload) =>
             {
                 auth.Stop(); // `sender` is also the auth instance
@@ -37,32 +43,30 @@ namespace Streetlight.Base
 
             auth.Start(); // Starts an internal HTTP Server
             auth.OpenBrowser();
-            _authenticated.WaitOne(); // Wait for the auth-token to come back.
+            _authenticated.WaitOne(); // Wait for the auth-token to come back.        
         }
 
-        public void GetTrack()
-        {
-            FullTrack track = _spotify.GetTrack("3Hvu1pq89D4R0lyPBoujSv");
-            Console.WriteLine($"Track: '{track.Name}' by '{track.Artists.First().Name}'");
-        }
+        public FullTrack GetTrack() => _spotify.GetTrack("3Hvu1pq89D4R0lyPBoujSv");
 
-        public void GetRandomTrack()
+        public FullTrack GetRandomTrack()
         {
-            var query = SearchTerm.GetNext(false);
-            var lookingFor = SpotifyAPI.Web.Enums.SearchType.All;
+            var query = SearchTerm.GetWithSeed("a");
+            var type = SpotifyAPI.Web.Enums.SearchType.Track;
+
             Console.WriteLine($"Searching for '{query}'... ");
+            var r = _spotify.SearchItems(query, type, limit: 1);
 
-            var r = _spotify.SearchItems(query, lookingFor, limit: 1);
-            if (r.HasError())
-            {
-                Console.WriteLine($"Spotify failed: {r.Error.Status} - {r.Error.Message}");
-            }
-            else if (r?.Tracks?.Items.Count > 0)
-            {
-                Console.WriteLine($"Spotify returned {r?.Tracks?.Items.Count} tracks.");
-                var track = r.Tracks?.Items?.FirstOrDefault();
-                if (track != null) Console.WriteLine($"First track: '{track.Name}' by '{track.Artists.First().Name}'");
-            }
+            if (r.HasError()) throw new SpotifyException(r.Error);
+            
+            Console.WriteLine($"Spotify returned {r?.Tracks?.Items.Count} tracks.");
+            return r.Tracks?.Items?.FirstOrDefault();
+        }
+
+        public void Dispose()
+        {
+            _authenticated.Reset();
+            _spotify.Dispose();
+            Console.WriteLine(">> Spotify has been disposed");
         }
     }
 }

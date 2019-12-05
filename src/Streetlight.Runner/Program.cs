@@ -7,8 +7,16 @@ namespace Streetlight.Runner
     {
         static void Main(string[] args)
         {
-            Action onDispose = () => Console.WriteLine("Cleanup completed.");
-            new ConsoleHandler(onDispose).Run(new Class1().PrintTrackName);
+            var spotify = new SpotifyController();
+
+            Action onDispose = () => 
+            { 
+                spotify.Dispose(); 
+                Console.WriteLine("Cleanup completed."); 
+            };
+            var controller = new ConsoleHandler(onDispose);
+
+            controller.Run(spotify.PrintTrackName);
             Console.WriteLine("Exiting gracefully.");
         }
     }
