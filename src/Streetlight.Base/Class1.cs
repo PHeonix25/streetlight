@@ -1,9 +1,17 @@
-﻿using System;
-
-namespace Streetlight.Base
+﻿namespace Streetlight.Base
 {
     public class Class1
     {
-        public void Say(string message) => Console.WriteLine(message);
+        private static Spotify _spotify;
+
+        public Class1()
+        {
+            _spotify = new Spotify();
+        }
+
+        public void PrintTrackName()
+        {
+            _spotify.GetRandomTrack();
+        }
     }
 }
